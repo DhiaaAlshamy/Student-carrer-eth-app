@@ -15,9 +15,9 @@ contract UsersStore {
     uint public nextUserId = 1;
 
     constructor() public {
-        addUser(address(0x123), "John Doe", "john@example.com", "Admin");
-        addUser(address(0x456), "Jane Smith", "jane@example.com", "User");
-        addUser(address(0x789), "Bob Johnson", "bob@example.com", "User");
+        // addUser(address(0x123), "John Doe", "john@example.com", "Admin");
+        // addUser(address(0x456), "Jane Smith", "jane@example.com", "User");
+        // addUser(address(0x789), "Bob Johnson", "bob@example.com", "User");
     }
 
     function addUser(address _publicAddress, string memory _name, string memory _email, string memory _role) public {

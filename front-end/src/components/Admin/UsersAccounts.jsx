@@ -43,8 +43,7 @@ function UsersAccounts({ drizzle, drizzleState }) {
             <tr>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 ID
               </th>
               <th
@@ -52,6 +51,12 @@ function UsersAccounts({ drizzle, drizzleState }) {
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Name
+              </th> 
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Public Address
               </th>
               <th
                 scope="col"
@@ -78,6 +83,9 @@ function UsersAccounts({ drizzle, drizzleState }) {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                   {user.name}
+                </td> 
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  {user.publicAddress}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                   {user.email}

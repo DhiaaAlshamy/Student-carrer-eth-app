@@ -5,6 +5,8 @@ function AddStudent({ drizzle, drizzleState }) {
   const [name, setName] = useState("");
   const [program, setProgram] = useState("");
   const [submissionYear, setSubmissionYear] = useState("");
+  const [publicAddress, setPublicAddress] = useState("");
+  const [email, setEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (event) => {
@@ -15,7 +17,9 @@ function AddStudent({ drizzle, drizzleState }) {
         universityID,
         name,
         program,
-        submissionYear
+        submissionYear,
+        email,
+        publicAddress
       );
       const gasLimit = await addStudentTx.estimateGas();
       await addStudentTx.send({
@@ -49,6 +53,20 @@ function AddStudent({ drizzle, drizzleState }) {
             onChange={(event) => setUniversityID(event.target.value)}
             required
           />
+        </div> 
+        <div className="flex flex-col mb-4">
+          <label className="mb-2 font-bold text-lg text-gray-900" htmlFor="publicAddress">
+             Public Address
+          </label>
+          <input
+            className="border py-2 px-3 text-grey-800"
+            type="text"
+            name="publicAddress"
+            id="publicAddress"
+            value={publicAddress}
+            onChange={(event) => setPublicAddress(event.target.value)}
+            required
+          />
         </div>
         <div className="flex flex-col mb-4">
           <label className="mb-2 font-bold text-lg text-gray-900" htmlFor="name">
@@ -61,6 +79,20 @@ function AddStudent({ drizzle, drizzleState }) {
             id="name"
             value={name}
             onChange={(event) => setName(event.target.value)}
+            required
+          />
+        </div> 
+        <div className="flex flex-col mb-4">
+          <label className="mb-2 font-bold text-lg text-gray-900" htmlFor="email">
+            Email
+          </label>
+          <input
+            className="border py-2 px-3 text-grey-800"
+            type="email"
+            name="email"
+            id="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
             required
           />
         </div>
