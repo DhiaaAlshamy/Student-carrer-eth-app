@@ -35,105 +35,136 @@ function AddStudent({ drizzle, drizzleState }) {
   };
 
   return (
-    <div className="px-4 py-4">
-      <div className="flex justify-between items-center">
-        <h1 className="text-xl font-bold text-gray-800">Add Student</h1>
+    <form className="w-full max-w-sm mx-auto" onSubmit={handleSubmit}>
+      <div className="mb-6">
+        <label
+          htmlFor="universityID"
+          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >
+          University ID
+        </label>
+        <input
+          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+          type="number"
+          id="universityID"
+          value={universityID}
+          onChange={(event) => setUniversityID(event.target.value)}
+          required
+        />
       </div>
-      <form onSubmit={handleSubmit}>
-        <div className="flex flex-col mb-4">
-          <label className="mb-2 font-bold text-lg text-gray-900" htmlFor="universityID">
-            University ID
-          </label>
+      <div className="mb-6">
+        <label
+          htmlFor="name"
+          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >
+          Name
+        </label>
+        <input
+          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+          type="text"
+          id="name"
+          value={name}
+          onChange={(event) => setName(event.target.value)}
+          required
+        />
+      </div>
+      <div className="mb-6">
+        <label
+          htmlFor="program"
+          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >
+          Program
+        </label>
+        <input
+          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+          type="text"
+          id="program"
+          value={program}
+          onChange={(event) => setProgram(event.target.value)}
+          required
+        />
+      </div>
+      <div className="mb-6">
+        <label
+          htmlFor="submissionYear"
+          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >
+          Submission Year
+        </label>
+        <input
+          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+          type="number"
+          id="submissionYear"
+          value={submissionYear}
+          onChange={(event) => setSubmissionYear(event.target.value)}
+          required
+        />
+      </div>
+      <div className="mb-6">
+        <label
+          htmlFor="email"
+          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >
+          Email
+        </label>
+        <input
+          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+          type="email"
+          id="email"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          required
+        />
+      </div>
+      <div className="mb-6">
+        <label
+          htmlFor="publicAddress"
+          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >
+          Public Address
+        </label>
+        <input
+          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+          type="text"
+          id="publicAddress"
+          value={publicAddress}
+          onChange={(event) => setPublicAddress(event.target.value)}
+          required
+        />
+      </div>
+      <div className="flex items-start mb-6">
+        <div className="flex items-center h-5">
           <input
-            className="border py-2 px-3 text-grey-800"
-            type="number"
-            name="universityID"
-            id="universityID"
-            value={universityID}
-            onChange={(event) => setUniversityID(event.target.value)}
-            required
-          />
-        </div> 
-        <div className="flex flex-col mb-4">
-          <label className="mb-2 font-bold text-lg text-gray-900" htmlFor="publicAddress">
-             Public Address
-          </label>
-          <input
-            className="border py-2 px-3 text-grey-800"
-            type="text"
-            name="publicAddress"
-            id="publicAddress"
-            value={publicAddress}
-            onChange={(event) => setPublicAddress(event.target.value)}
+            id="terms"
+            type="checkbox"
+            value=""
+            className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
             required
           />
         </div>
-        <div className="flex flex-col mb-4">
-          <label className="mb-2 font-bold text-lg text-gray-900" htmlFor="name">
-            Name
-          </label>
-          <input
-            className="border py-2 px-3 text-grey-800"
-            type="text"
-            name="name"
-            id="name"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-            required
-          />
-        </div> 
-        <div className="flex flex-col mb-4">
-          <label className="mb-2 font-bold text-lg text-gray-900" htmlFor="email">
-            Email
-          </label>
-          <input
-            className="border py-2 px-3 text-grey-800"
-            type="email"
-            name="email"
-            id="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            required
-          />
-        </div>
-        <div className="flex flex-col mb-4">
-          <label className="mb-2 font-bold text-lg text-gray-900" htmlFor="program">
-            Program
-          </label>
-          <input
-            className="border py-2 px-3 text-grey-800"
-            type="text"
-            name="program"
-            id="program"
-            value={program}
-            onChange={(event) => setProgram(event.target.value)}
-            required
-          />
-        </div>
-        <div className="flex flex-col mb-4">
-          <label className="mb-2 font-bold text-lg text-gray-900" htmlFor="submissionYear">
-            Submission Year
-          </label>
-          <input
-            className="border py-2 px-3 text-grey-800"
-            type="number"
-            name="submissionYear"
-            id="submissionYear"
-            value={submissionYear}
-            onChange={(event) => setSubmissionYear(event.target.value)}
-            required
-          />
-        </div>
-        <div className="flex justify-center">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">
-            Add Student
-          </button>
-        </div>
-        {errorMessage && (
-          <div className="text-red-500 mt-4">{errorMessage}</div>
-        )}
-      </form>
-    </div>
+        <label
+          htmlFor="terms"
+          className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+        >
+          I agree with the{" "}
+          <a
+            href="#"
+            className="text-blue-600 hover:underline dark:text-blue-500"
+          >
+            terms and conditions
+          </a>
+        </label>
+      </div>
+      <button
+        type="submit"
+        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      >
+        Register new account
+      </button>
+      {errorMessage && (
+        <p className="text-red-500 text-sm mt-4">{errorMessage}</p>
+      )}
+    </form>
   );
 }
 

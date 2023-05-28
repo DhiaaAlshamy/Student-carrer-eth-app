@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { AdminSidebar, Students, UsersAccounts, AddUserForm, EditUserForm, AddStudent } from '../components/Admin';
+import { AdminSidebar, Students, UsersAccounts, AddUserForm, EditUserForm, AddStudent ,EditStudent} from '../components/Admin';
 import { Layout } from "../components/Ui";
 import MyProfile from "./MyProfile";
 
@@ -17,7 +17,9 @@ export default function AdminHome({drizzle, drizzleState }) {
       drizzleState={drizzleState} ></AddUserForm>, main: () => <></>},
       { path: "/addStudent", sidebar: () => <AddStudent drizzle={drizzle}
       drizzleState={drizzleState} ></AddStudent>, main: () => <></>},
-      { path: "/editUser/:id", sidebar: () => <EditUserForm></EditUserForm>, main: () => <></> }
+      { path: "/editUser/:id", sidebar: () => <EditUserForm></EditUserForm>, main: () => <></> },
+      { path: "/editStudent/:id", sidebar: () => <EditStudent drizzle={drizzle}
+      drizzleState={drizzleState} ></EditStudent>, main: () => <></> }
     ];
   return (
     <Router>

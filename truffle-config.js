@@ -2,6 +2,11 @@ const path = require("path");
 
 module.exports = {
   contracts_build_directory: path.join(__dirname, "front-end/src/contracts"),
+  compilers: {
+    solc: {
+      version: "0.8.0"
+    }
+  },
     networks: {
       development: {
         url: "HTTP://192.168.0.242:7345",

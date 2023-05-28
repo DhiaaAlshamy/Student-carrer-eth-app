@@ -4,3 +4,4 @@ export { default as AddUserForm } from './AddUserForm';
 export { default as Students } from './Students';
 export { default as EditUserForm } from './EditUserForm';
 export { default as AddStudent } from './AddStudent';
+export { default as EditStudent } from './EditStudentForm';

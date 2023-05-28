@@ -1,52 +1,44 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import EditStudent from "./EditStudentForm";
 
 function Students({ drizzle, drizzleState }) {
-const [dataKey, setDataKey] = useState(null);
+  const [dataKey, setDataKey] = useState(null);
+  const [selectedStudent, setSelectedStudent] = useState(null);
 
-useEffect(() => {
-const contract = drizzle.contracts.StudentsStore;
-// console.log(contract);
-// let drizzle know we want to watch the getAllStudents method
-const dataKey = contract.methods["getAllStudents"].cacheCall();
+  useEffect(() => {
+    const contract = drizzle.contracts.StudentsStore;
 
-// save the `dataKey` to local component state for later reference
-setDataKey(dataKey);
+    const dataKey = contract.methods["getStudents"].cacheCall();
+    setDataKey(dataKey);
+  }, [drizzle]);
 
-}, [drizzle]);
-// useEffect(() => {
-//   const checkAccount = async () => {
-//     const accounts = await drizzle.web3.eth.getAccounts();
-//     accounts.map((account, index) => {
-//       console.log('account',index,account);
-//     })
-     
-//   };
-//   checkAccount();
-// }, []);
-// get the contract state from drizzleState
-// console.log(drizzle.eth.);
-const { StudentsStore } = drizzleState.contracts;
+  const handleEditStudent = (index) => {
+    setSelectedStudent(index);
+  };
 
-// using the saved dataKey, get the variables we're interested in
-const allStudents = StudentsStore.getAllStudents[dataKey];
+  const handleCloseEdit = () => {
+    setSelectedStudent(null);
+  };
 
-// if the data hasn't loaded yet, display a loading indicator
-if (!allStudents || !allStudents.value) {
-return <p>Loading...</p>;
-}
+  const { StudentsStore } = drizzleState.contracts;
 
+  const allStudents = StudentsStore.getStudents[dataKey];
+  console.log(allStudents);
 
+  if (!allStudents || !allStudents.value) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <div className="px-4 py-4">
       <div className="flex justify-between items-center">
         <h1 className="text-xl font-bold text-gray-800">Students</h1>
-        
-        <Link to='/addStudent'>
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Add Student
-        </button>
+
+        <Link to="/addStudent">
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Add Student
+          </button>
         </Link>
       </div>
       <div className="my-4">
@@ -65,7 +57,7 @@ return <p>Loading...</p>;
               >
                 Name
               </th>
-             
+
               <th
                 scope="col"
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -84,33 +76,34 @@ return <p>Loading...</p>;
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-          {allStudents.value[0].map((universityID, index) => (
-              <tr key= {universityID}>
+            {allStudents?.value?.map((universityID, index) => (
+              <tr key=  {allStudents.value[index].universityID}>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                {universityID}
-                                </td>
+                {allStudents.value[index].universityID}
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  {allStudents.value[1][index]}
+                  {allStudents.value[index].name}
                 </td>
-             
+
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {allStudents.value[2][index]}
+                  {allStudents.value[index].program}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {allStudents.value[3][index]}
+                  {allStudents.value[index].submissionYear}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                    Edit
-                  </a>
+                <Link className="text-indigo-600 hover:text-indigo-900" to={`/editStudent/${allStudents.value[index].universityID}`}>Edit</Link>
+
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+
+    
     </div>
   );
-};
+}
 
 export default Students;
