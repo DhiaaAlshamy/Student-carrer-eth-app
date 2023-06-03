@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@drizzle/react-plugin": "^1.5.3",
     "@drizzle/store": "^1.5.3",
     "@heroicons/react": "^2.0.17",
     "@testing-library/jest-dom": "^5.16.5",

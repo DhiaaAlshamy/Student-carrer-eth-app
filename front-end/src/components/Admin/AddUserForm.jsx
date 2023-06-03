@@ -7,11 +7,34 @@ const AddUserForm = ({ drizzle,drizzleState }) => {
   const [publicAddress, setPublicAddress] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("student");
-  const [faculty, setFaculty] = useState("");
-  const [level, setLevel] = useState("");
+  const [program, setprogram] = useState("");
+  const [submissionYear, setsubmissionYear] = useState("");
+  const [universityID, setUniversityID] = useState("");
   const navigate = useNavigate();
 
   const handleAddUser = async () => {
+    if(role==='Student'){
+      try {
+        const contract = drizzle.contracts.StudentsStore;
+        const addStudentTx = contract.methods.addStudent(
+          universityID,
+          name,
+          program,
+          submissionYear,
+          email,
+          publicAddress
+        );
+        const gasLimit = await addStudentTx.estimateGas();
+        await addStudentTx.send({
+          from: drizzleState.accounts[0],
+          gas: gasLimit,
+        });
+        alert("Student added successfully!");
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    else
     try {
       const contract = drizzle.contracts.UsersStore;
       const registerUserTx = contract.methods.addUser(
@@ -121,8 +144,8 @@ const AddUserForm = ({ drizzle,drizzleState }) => {
               onChange={(e) => setRole(e.target.value)}
               required
             >
-              <option value="student">Student</option>
-              <option value="employer">Employer</option>
+              <option value="Student">Student</option>
+              <option value="Employer">Employer</option>
             </select>
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
               <svg
@@ -148,17 +171,17 @@ const AddUserForm = ({ drizzle,drizzleState }) => {
           <div className="mb-4">
             <label
               className="block text-gray-700 font-bold mb-2"
-              htmlFor="faculty"
+              htmlFor="program"
             >
-              Faculty
+              program
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="faculty"
+              id="program"
               type="text"
-              placeholder="Faculty"
-              value={faculty}
-              onChange={(e) => setFaculty(e.target.value)}
+              placeholder="program"
+              value={program}
+              onChange={(e) => setprogram(e.target.value)}
               required
             />
           </div>
@@ -167,17 +190,36 @@ const AddUserForm = ({ drizzle,drizzleState }) => {
           <div className="mb-4">
             <label
               className="block text-gray-700 font-bold mb-2"
-              htmlFor="level"
+              htmlFor="universityID"
             >
-              Level
+              university ID
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="level"
+              id="universityID"
               type="text"
-              placeholder="Level"
-              value={level}
-              onChange={(e) => setLevel(e.target.value)}
+              placeholder="universityID"
+              value={universityID}
+              onChange={(e) => setUniversityID(e.target.value)}
+              required
+            />
+          </div>
+        )}
+        {role === "student" && (
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 font-bold mb-2"
+              htmlFor="submissionYear"
+            >
+              submissionYear
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="submissionYear"
+              type="text"
+              placeholder="submissionYear"
+              value={submissionYear}
+              onChange={(e) => setsubmissionYear(e.target.value)}
               required
             />
           </div>

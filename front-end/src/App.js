@@ -1,70 +1,97 @@
-import { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import {AdminSidebar, UsersAccounts,Students} from './components/Admin/'
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Layout } from './components/Ui';
-import { AdminHome } from './pages';
-import ReadString from './ReadString';
-import SetString from './SetString';
-import ReadStudents from './ReadStudents';
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import UserTypeSelection from "./UserTypeSelection";
+import StudentsStore from "./contracts/StudentsStore.json";
+import UsersStore from "./contracts/UsersStore.json";
+import { DrizzleContext } from "@drizzle/react-plugin";
 
-class App extends Component {
-  state = { loading: true, drizzleState: null, metamaskConnected: false };
- 
-  componentDidMount() {
-    const { drizzle } = this.props;
+import { AdminSidebar, Students, UsersAccounts, AddUserForm, EditUserForm, AddStudent ,EditStudent, Employers} from './components/Admin';
 
-    // check if MetaMask is installed and connected
-    if (window.ethereum) {
-      window.ethereum
-        .request({ method: 'eth_accounts' })
-        .then((accounts) => {
-          if (accounts.length > 0) {
-            this.setState({ metamaskConnected: true });
+import { AdminHome, StudentHome } from "./pages";
+import Web3 from "web3";
+import { Drizzle, generateStore } from "@drizzle/store";
+import MyProfile from "./pages/MyProfile";
+import { MySemesters } from "./components/Student";
+
+function App() {
+    
+    const [userType, setUserType] = useState(null);
+    let web3
+  
+  if (typeof window !== 'undefined' && typeof window.ethereum !== 'undefined') {
+    // Use MetaMask provider
+    window.ethereum.enable().then(() => {
+      web3 = new Web3(window.ethereum)
+      // console.log(web3);
+      web3.eth.getCoinbase(function (err, account) {
+        if (err === null) {
+            App.account = account;
+            console.log("account", App.account);
+        }
+    })
+    }).catch((error) => {
+      console.error(error)
+    })
+    // web3 = new Web3(new Web3.providers.HttpProvider("HTTP://192.168.0.242:7345"))
+  } else {
+    // Use local provider (e.g., Ganache)
+  }
+  // let drizzle know what contracts we want and how to access our test blockchain
+  const options = {
+    contracts: [StudentsStore,UsersStore],
+    web3: {
+      fallback: {
+        type: "ws",
+        url: "ws://192.168.0.242:7345",
+      },
+    },
+  };
+  
+  // setup the drizzle store and drizzle
+  const drizzle = new Drizzle(options);
+  
+  // use the drizzle context to access the drizzle state
+  return (
+    <DrizzleContext.Provider drizzle={drizzle}>
+      <DrizzleContext.Consumer>
+        {(drizzleContext) => {
+          const { drizzleState } = drizzleContext;
+  
+          // check if drizzle is initialized
+          if (!drizzleState) {
+            return "Loading...";
           }
-        })
-        .catch((error) => console.error(error));
-    }
-
-    // subscribe to changes in the store
-    this.unsubscribe = drizzle.store.subscribe(() => {
-
-      // every time the store updates, grab the state from drizzle
-      const drizzleState = drizzle.store.getState();
-
-      // check to see if it's ready, if so, update local component state
-      if (drizzleState.drizzleStatus.initialized) {
-        this.setState({ loading: false, drizzleState });
-      }
-    });
+  
+          // render the app with the routes and the drizzle state
+          return (
+            <Router>
+              <div className="App">
+                <Routes>
+                  <Route path="/" element={<UserTypeSelection userType={userType} setUserType={setUserType} />} />
+                  <Route path="/admin" element={<AdminHome />}>
+                    {/* Define child routes inside the parent route element */}
+                    <Route path="profile" element={<MyProfile />} />
+                    <Route path="users" element={<UsersAccounts drizzle={drizzle} drizzleState={drizzleState} />} />
+                    <Route path="students" element={<Students drizzle={drizzle} drizzleState={drizzleState} />} />
+                    <Route path="employers" element={<Employers drizzle={drizzle} drizzleState={drizzleState} />} />
+                    <Route path="addUser" element={<AddUserForm drizzle={drizzle} drizzleState={drizzleState} />} />
+                    <Route path="addStudent" element={<AddStudent drizzle={drizzle} drizzleState={drizzleState} />} />
+                    <Route path="editUser/:id" element={<EditUserForm />} />
+                    <Route path="editStudent/:id" element={<EditStudent drizzle={drizzle} drizzleState={drizzleState} />} />
+                  </Route>
+                  <Route path="/student" element={<StudentHome />}>
+                    {/* Define child routes inside the parent route element */}
+                    <Route path="profile" element={<MyProfile />} />
+                    <Route path="mySemesters" element={<MySemesters />} />
+                    </Route>
+                </Routes>
+              </div>
+            </Router>
+          );
+        }}
+      </DrizzleContext.Consumer>
+    </DrizzleContext.Provider>
+  );
   }
-
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
-
-  render() {
-    if (this.state.loading) {
-      return "Loading Drizzle...";
-    } else if (!this.state.metamaskConnected) {
-      return "Please connect to MetaMask";
-    } else {
-      return (
-        <div className="App">
-            <p>{this.state.drizzleState.accounts[0]}</p>
-          <AdminHome  drizzle={this.props.drizzle}
-            drizzleState={this.state.drizzleState} >
-
-          </AdminHome>
-          {/* <SetString
-            drizzle={this.props.drizzle}
-            drizzleState={this.state.drizzleState}
-          /> */}
-        </div>
-      );
-    }
-  }
-}
-
-export default App;
+  
+  export default App;

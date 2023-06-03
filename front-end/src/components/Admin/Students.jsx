@@ -35,7 +35,7 @@ function Students({ drizzle, drizzleState }) {
       <div className="flex justify-between items-center">
         <h1 className="text-xl font-bold text-gray-800">Students</h1>
 
-        <Link to="/addStudent">
+        <Link  to="../addStudent" >
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Add Student
           </button>
@@ -76,7 +76,7 @@ function Students({ drizzle, drizzleState }) {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {allStudents?.value?.map((universityID, index) => (
+            {allStudents.value.map((universityID, index) => (
               <tr key=  {allStudents.value[index].universityID}>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                 {allStudents.value[index].universityID}
@@ -92,7 +92,7 @@ function Students({ drizzle, drizzleState }) {
                   {allStudents.value[index].submissionYear}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <Link className="text-indigo-600 hover:text-indigo-900" to={`/editStudent/${allStudents.value[index].universityID}`}>Edit</Link>
+                <Link className="text-indigo-600 hover:text-indigo-900" to={`../editStudent/${allStudents.value[index].universityID}`}>Edit</Link>
 
                 </td>
               </tr>

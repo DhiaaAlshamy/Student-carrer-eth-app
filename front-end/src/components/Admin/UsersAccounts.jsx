@@ -31,7 +31,7 @@ function UsersAccounts({ drizzle, drizzleState }) {
       <div className="flex justify-between items-center">
         <h1 className="text-xl font-bold text-gray-800">Users</h1>
         
-        <Link to='/addUser'>
+        <Link to='../addUser'>
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Add User
           </button>
