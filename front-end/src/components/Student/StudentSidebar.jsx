@@ -6,7 +6,7 @@ const StudentSidebar = () => {
   return <div className="flex flex-col h-screen w-64 bg-gray-200 pt-4">
       <div className="flex flex-col items-center justify-center flex-shrink-0">
         <img className="h-16 w-16 rounded-full" src="https://via.placeholder.com/150" alt="student Avatar" />
-        <h2 className="mt-2 text-xl font-bold text-gray-800">Student Name</h2>
+        <h2 className="mt-2 text-xl font-bold text-gray-800">Student Dashboard</h2>
       </div>
       <nav className="mt-8">
         <div className="px-2 space-y-1">

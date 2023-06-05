@@ -4,10 +4,9 @@ import useDrizzleContractData from '../../hooks/useDrizzleContractData';
 import SemesterCourse from './SemesterCourse';
 
 
-export default function StudentSemester({ semesterId }) {
-    const [student] = useOutletContext();
+export default function StudentSemester({ studentId,semesterId }) {
     const [semesterCourses, setSemesterCourses] = useState(null);
-    const sem = useDrizzleContractData("StudentsStore", "getStudentCourses", student.universityID, semesterId).data;
+    const sem = useDrizzleContractData("StudentsStore", "getStudentCourses", studentId, semesterId).data;
     // const studentInfo = useDrizzleContractData("StudentsStore", "getStudentInfo",student.universityID);
 
     useEffect(() => {
@@ -25,7 +24,7 @@ export default function StudentSemester({ semesterId }) {
                 <li key={courseCode} className="border rounded p-4">
                     <h3 className='font-bold'>{courseCode} </h3>
 
-                <SemesterCourse courseId={courseCode} semesterId={semesterId}/>
+                <SemesterCourse studentId={studentId} courseId={courseCode} semesterId={semesterId}/>
                 </li>
             ))}
 

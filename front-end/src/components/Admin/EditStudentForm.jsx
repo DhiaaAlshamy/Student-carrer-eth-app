@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { CourseModal } from "../Ui";
-import StudentInfo from "../StudentInfo";
+import StudentProfile from "../StudentProfile";
 
 function EditStudent({ drizzle, drizzleState, studentIndex, onClose }) {
   const [studentData, setStudentData] = useState(null);
@@ -109,7 +109,7 @@ function EditStudent({ drizzle, drizzleState, studentIndex, onClose }) {
     <div className="bg-white p-4">
      
 
-      <StudentInfo  studentData={studentData}/>
+      <StudentProfile  studentData={studentData}/>
       <div className="mt-4">
         <h3 className="text-md font-medium">Add Semester</h3>
         <div className="flex space-x-2">
@@ -200,21 +200,11 @@ function EditStudent({ drizzle, drizzleState, studentIndex, onClose }) {
       </div>
 
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-10">
-          <div className="bg-white p-4">
-            <h2 className="text-lg font-semibold mb-2">Add Course</h2>
-            <button
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-              onClick={() => setIsModalOpen(false)}
-            >
-              Close
-            </button>
+       
             <div>
               {/* Render the course inputs inside the modal */}
               <CourseModal isOpen={isModalOpen} onClose={onModalClose} onSave={handleSaveCourse} semester={semester}></CourseModal>
             </div>
-          </div>
-        </div>
 
       )}
     </div>

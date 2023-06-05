@@ -4,6 +4,7 @@ import { DrizzleContext } from "@drizzle/react-plugin";
 const useDrizzleContractData = (contractName, method, ...args) => {
   const { drizzle } = useContext(DrizzleContext.Context);
   const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -15,7 +16,8 @@ const useDrizzleContractData = (contractName, method, ...args) => {
           const result = await contractMethod(...args).call();
           setData(result);
         } catch (error) {
-          console.error("Error fetching contract data:", error);
+          console.error("fetching contract data:", error);
+          setError("Failed to retrieve data  You don't have the permission to view This Information ");
         }
       }
     };
@@ -23,7 +25,7 @@ const useDrizzleContractData = (contractName, method, ...args) => {
     fetchData();
   }, [contractName, method, drizzle, ...args]);
 
-  return data;
+  return { data, error };
 };
 
 export default useDrizzleContractData;

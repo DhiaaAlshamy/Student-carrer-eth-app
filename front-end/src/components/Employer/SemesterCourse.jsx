@@ -3,10 +3,9 @@ import { useOutletContext } from "react-router-dom";
 import useDrizzleContractData from '../../hooks/useDrizzleContractData';
 
 
-export default function SemesterCourse({ semesterId,courseId }) {
-    const [student] = useOutletContext();
+export default function SemesterCourse({ studentId,semesterId,courseId }) {
     const [courseInfo, setCourseInfo] = useState(null);
-    const cor = useDrizzleContractData("StudentsStore", "getStudentCourse", student.universityID, semesterId,courseId).data;
+    const cor = useDrizzleContractData("StudentsStore", "getStudentCourse", studentId, semesterId,courseId).data;
     // const studentInfo = useDrizzleContractData("StudentsStore", "getStudentInfo",student.universityID);
 
     useEffect(() => {

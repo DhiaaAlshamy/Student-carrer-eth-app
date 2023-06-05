@@ -1,28 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import useDrizzleContractData from "../../hooks/useDrizzleContractData";
 
-function Employers({ drizzle, drizzleState }) {
-    const [dataKey, setDataKey] = useState(null);
+function Employers() {
+    const [usersList, setUsersList] = useState(null);
+    const users = useDrizzleContractData("UsersStore", "getAllUsers").data;
 
     useEffect(() => {
-        const contract = drizzle.contracts.UsersStore;
-        // let drizzle know we want to watch the getAllUsers method
-        const dataKey = contract.methods["getAllUsers"].cacheCall();
+        if(users){
+            setUsersList(users)
+        }
+    }, [users]);
 
-        // save the `dataKey` to local component state for later reference
-        setDataKey(dataKey);
 
-    }, [drizzle]);
-
-    // get the contract state from drizzleState
-    const { UsersStore } = drizzleState.contracts;
-
-    // using the saved dataKey, get the variables we're interested in
-    const allUsers = UsersStore.getAllUsers[dataKey];
-    console.log(allUsers);
+    const allUsers = usersList
 
     // if the data hasn't loaded yet, display a loading indicator
-    if (!allUsers || !allUsers.value) {
+    if (!allUsers) {
         return <p>Loading...</p>;
     }
 
@@ -62,7 +55,7 @@ function Employers({ drizzle, drizzleState }) {
                         </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                        {allUsers.value
+                        {allUsers
                             .filter(user => user.role === "Employer")
                             .map(user => (
                                 <tr key={user.id}>

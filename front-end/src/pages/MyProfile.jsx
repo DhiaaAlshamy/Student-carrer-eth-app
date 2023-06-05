@@ -1,13 +1,13 @@
 import React from 'react'
 import Profile from '../components/Profile'
-const profile = {
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    role: 'User',
-    publicAddress: '0x1234567890ABCDEF'
-  };
+import { useOutletContext } from "react-router-dom";
 export default function MyProfile() {
+
+  const [profile] = useOutletContext()
+  console.log(profile);
   return (
-    <div><Profile props={profile}/></div>
+    <div>
+      <Profile props={profile}/>
+      </div>
   )
 }

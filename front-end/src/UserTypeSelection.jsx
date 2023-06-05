@@ -8,7 +8,7 @@ import useDrizzleContractData from "./hooks/useDrizzleContractData";
 const UserTypeSelection = ({userType,setUserType}) => {
   // Declare state variables for user type, account, and error message
   const [account, setAccount] = useState(null);
-  const users = useDrizzleContractData("UsersStore", "getAllUsers");
+  const users = useDrizzleContractData("UsersStore", "getAllUsers").data;
   const [error, setError] = useState(null);
   const ganacheURL = "http://192.168.0.242:7345";
   const {drizzle,drizzleState} = useDrizzle()

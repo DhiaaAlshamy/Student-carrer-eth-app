@@ -13,15 +13,21 @@ function AddStudent({ drizzle, drizzleState }) {
     event.preventDefault();
     try {
       const contract = drizzle.contracts.StudentsStore;
+      const tokenContract = drizzle.contracts.TokenStore;
       const addStudentTx = contract.methods.addStudent(
         universityID,
         name,
         program,
         submissionYear,
         email,
-        publicAddress
+        publicAddress,
+        100
       );
       const gasLimit = await addStudentTx.estimateGas();
+      await tokenContract.methods.approve(drizzle.contracts.StudentsStore.address, gasLimit).send({
+        from: drizzleState.accounts[0],
+        gas: gasLimit,
+      });
       await addStudentTx.send({
         from: drizzleState.accounts[0],
         gas: gasLimit,
@@ -33,7 +39,6 @@ function AddStudent({ drizzle, drizzleState }) {
       setErrorMessage("Error adding student. Please try again.");
     }
   };
-
   return (
     <form className="w-full max-w-sm mx-auto" onSubmit={handleSubmit}>
       <div className="mb-6">

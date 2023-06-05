@@ -2,16 +2,18 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import UserTypeSelection from "./UserTypeSelection";
 import StudentsStore from "./contracts/StudentsStore.json";
+import TokenStore from "./contracts/TokenStore.json";
 import UsersStore from "./contracts/UsersStore.json";
 import { DrizzleContext } from "@drizzle/react-plugin";
 
 import { AdminSidebar, Students, UsersAccounts, AddUserForm, EditUserForm, AddStudent ,EditStudent, Employers} from './components/Admin';
 
-import { AdminHome, StudentHome } from "./pages";
+import { AdminHome, EmployerHome, StudentHome } from "./pages";
 import Web3 from "web3";
 import { Drizzle, generateStore } from "@drizzle/store";
 import MyProfile from "./pages/MyProfile";
-import { MySemesters } from "./components/Student";
+import { EmployersList, MySemesters } from "./components/Student";
+import { StudentInfo, StudentsList } from "./components/Employer";
 
 function App() {
     
@@ -38,7 +40,7 @@ function App() {
   }
   // let drizzle know what contracts we want and how to access our test blockchain
   const options = {
-    contracts: [StudentsStore,UsersStore],
+    contracts: [StudentsStore,UsersStore,TokenStore],
     web3: {
       fallback: {
         type: "ws",
@@ -73,7 +75,7 @@ function App() {
                     <Route path="profile" element={<MyProfile />} />
                     <Route path="users" element={<UsersAccounts drizzle={drizzle} drizzleState={drizzleState} />} />
                     <Route path="students" element={<Students drizzle={drizzle} drizzleState={drizzleState} />} />
-                    <Route path="employers" element={<Employers drizzle={drizzle} drizzleState={drizzleState} />} />
+                    <Route path="employers" element={<Employers />} />
                     <Route path="addUser" element={<AddUserForm drizzle={drizzle} drizzleState={drizzleState} />} />
                     <Route path="addStudent" element={<AddStudent drizzle={drizzle} drizzleState={drizzleState} />} />
                     <Route path="editUser/:id" element={<EditUserForm />} />
@@ -83,6 +85,14 @@ function App() {
                     {/* Define child routes inside the parent route element */}
                     <Route path="profile" element={<MyProfile />} />
                     <Route path="mySemesters" element={<MySemesters />} />
+                    <Route path="employers" element={<EmployersList />} />
+                    </Route>
+                     <Route path="/employer" element={<EmployerHome />}>
+                    {/* Define child routes inside the parent route element */}
+                    <Route path="profile" element={<MyProfile />} />
+                    <Route path="students" element={<StudentsList />} />
+                    <Route path="showStudent/:id" element={<StudentInfo drizzle={drizzle} drizzleState={drizzleState} />} />
+
                     </Route>
                 </Routes>
               </div>

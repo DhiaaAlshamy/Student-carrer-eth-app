@@ -7,7 +7,7 @@ import useDrizzleContractData from '../hooks/useDrizzleContractData';
 
 export default function StudentHome() {
   const [student, setStudent] = useState(null);
-  const students = useDrizzleContractData("StudentsStore", "getStudents");
+  const students = useDrizzleContractData("StudentsStore", "getStudents").data;
 
   useEffect(() => {
     if (students) {
